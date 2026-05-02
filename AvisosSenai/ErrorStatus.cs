@@ -3,5 +3,5 @@ using System.Text;
 
 namespace AvisosSenai
 {
-    public enum ErrorStatus { None,FileError,MemoryError,ServerError,ConectionErrorddd}
+    public enum ErrorStatus { None,FileError,MemoryError,ServerError,ConectionError}
 } 
