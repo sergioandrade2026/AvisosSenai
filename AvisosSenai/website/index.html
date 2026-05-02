@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avisos Senai</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        #lista-avisos {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .aviso {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 5px solid #0056b3;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+            .aviso h3 {
+                margin: 0 0 10px 0;
+                color: #0056b3;
+            }
+
+            .aviso p {
+                margin: 0;
+                color: #555;
+            }
+    </style>
+</head>
+<body>
+
+    <h1>Painel de Avisos</h1>
+    <div id="lista-avisos">
+        <p>Carregando avisos...</p>
+    </div>
+
+    <script>
+       
+        fetch('db.json')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('lista-avisos');
+                container.innerHTML = '';
+
+                data.forEach(aviso => {
+                   
+                    const div = document.createElement('div');
+                    div.className = 'aviso';
+
+                    const h3 = document.createElement('h3');
+                    h3.textContent = aviso.titulo;
+
+                    const p = document.createElement('p');
+                    p.textContent = aviso.descricao;
+
+                    div.appendChild(h3);
+                    div.appendChild(p);
+                    container.appendChild(div);
+                });
+            })
+            .catch(err => {
+                document.getElementById('lista-avisos').innerHTML = '<p>Erro ao carregar avisos.</p>';
+                console.error(err);
+            });
+    </script>
+</body>
+</html>
