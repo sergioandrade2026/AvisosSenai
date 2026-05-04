@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Deletar Avisos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <header>
+        <nav class="flex items-center justify-between bg-blue-950 px-6 py-4 text-white">
+            <div class="flex flex-row gap-1">
+                <h1 class="text-2xl font-bold">Avisos</h1>
+                <h1 class="text-2xl font-bold text-orange-600">Senai</h1>
+            </div>
+
+            <div id="menu-admin" class="hidden gap-6 font-medium md:flex">
+                <button onclick="irAdicionar()" class="hover:text-blue-300">Adicionar</button>
+                <button onclick="irDeletar()" class="hover:text-blue-300">Deletar</button>
+            </div>
+
+            <div>
+                <button onclick="logout()" class="underline">Sair</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="mx-auto max-w-2xl p-8">
+        <h2 class="mb-4 text-xl font-bold">Gerenciar Avisos</h2>
+        <ul id="lista-deletar" class="space-y-2"></ul>
+    </main>
+
+    <script>
+        if (localStorage.getItem('logado') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        function verificarLogin() {
+            document.getElementById('menu-admin').classList.remove('hidden');
+        }
+
+        function irAdicionar() {
+            window.location.href = 'adicionar.html';
+        }
+
+        function irDeletar() {
+            window.location.href = 'deletar.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('logado');
+            window.location.href = 'login.html';
+        }
+
+        async function carregar() {
+            const listaUl = document.getElementById('lista-deletar');
+            const res = await fetch('/avisos');
+            const avisos = await res.json();
+
+            listaUl.innerHTML = '';
+
+            avisos.forEach((item, index) => {
+                listaUl.innerHTML += `
+                    <li class="flex items-center justify-between rounded bg-white p-4 shadow">
+                        <span>${item.titulo}</span>
+                        <button onclick="apagar(${index})" class="rounded bg-red-500 px-3 py-1 text-white">Deletar</button>
+                    </li>
+                `;
+            });
+        }
+
+        async function apagar(index) {
+            await fetch('/deletar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain' },
+                body: index.toString()
+            });
+
+            carregar();
+        }
+
+        verificarLogin();
+        carregar();
+    </script>
+</body>
+</html>

@@ -1,81 +1,116 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avisos Senai</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            background: #f4f4f4;
-            padding: 20px;
-        }
-
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-
-        #lista-avisos {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .aviso {
-            background: white;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-left: 5px solid #0056b3;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-            .aviso h3 {
-                margin: 0 0 10px 0;
-                color: #0056b3;
-            }
-
-            .aviso p {
-                margin: 0;
-                color: #555;
-            }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="flex min-h-screen flex-col bg-gray-100">
 
-    <h1>Painel de Avisos</h1>
-    <div id="lista-avisos">
-        <p>Carregando avisos...</p>
-    </div>
+    <header>
+        <nav class="flex items-center justify-between bg-blue-950 px-6 py-4 text-white">
+            <div class="flex flex-row gap-1">
+                <h1 class="text-4xl font-bold tracking-tight">Avisos</h1>
+                <h1 class="text-4xl font-bold tracking-tight text-orange-600">Senai</h1>
+            </div>
+
+            <div id="menu-admin" class="hidden gap-6 font-medium md:flex">
+                <button onclick="irAdicionar()" class="transition hover:text-blue-300">Adicionar</button>
+                <button onclick="irDeletar()" class="transition hover:text-blue-300">Deletar</button>
+            </div>
+
+         
+            <div class="flex-none">
+                <button id="btn-login"
+                        onclick="irLogin()"
+                        class="rounded bg-white px-4 py-1 font-semibold text-blue-950 transition hover:bg-gray-200">
+                    Login
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="grow p-8">
+        <article class="mx-auto max-w-4xl">
+            <h2 class="mb-6 text-xl font-semibold">Últimos avisos</h2>
+
+            <ul id="lista-avisos" class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4"></ul>
+        </article>
+    </main>
+
+    <footer class="mt-auto bg-blue-950 py-4 text-center text-sm text-white">
+        &copy; 2026 Avisos Senai - All rights reserved
+    </footer>
 
     <script>
+        
+        function verificarLogin() {
+            const logado = localStorage.getItem('logado') === 'true';
+
+            const menuAdmin = document.getElementById('menu-admin');
+            const btnLogin = document.getElementById('btn-login');
+
+            if (logado) {
+                menuAdmin.classList.remove('hidden'); 
+                btnLogin.classList.add('hidden');    
+            } else {
+                menuAdmin.classList.add('hidden');   
+                btnLogin.classList.remove('hidden');  
+            }
+        }
+
        
-        fetch('db.json')
-            .then(response => response.json())
-            .then(data => {
-                const container = document.getElementById('lista-avisos');
-                container.innerHTML = '';
+        function irLogin() {
+            window.location.href = 'login.html';
+        }
 
-                data.forEach(aviso => {
-                   
-                    const div = document.createElement('div');
-                    div.className = 'aviso';
+        function irAdicionar() {
+            window.location.href = 'adicionar.html';
+        }
 
-                    const h3 = document.createElement('h3');
-                    h3.textContent = aviso.titulo;
+        function irDeletar() {
+            window.location.href = 'deletar.html';
+        }
 
-                    const p = document.createElement('p');
-                    p.textContent = aviso.descricao;
+        
+        async function buscarDados() {
+        const lista = document.getElementById('lista-avisos');
 
-                    div.appendChild(h3);
-                    div.appendChild(p);
-                    container.appendChild(div);
-                });
-            })
-            .catch(err => {
-                document.getElementById('lista-avisos').innerHTML = '<p>Erro ao carregar avisos.</p>';
-                console.error(err);
-            });
+        try {
+            const response = await fetch('./db.json'); 
+            const dados = await response.json();
+
+            lista.innerHTML = '';
+
+           
+            if (!Array.isArray(dados)) {
+                lista.innerHTML = '<p>Formato inválido do JSON</p>';
+                return;
+            }
+
+            for (let i = 0; i < dados.length; i++) {
+                const item = dados[i];
+
+                lista.innerHTML += `
+                <li>
+                    <div class="rounded bg-white p-4 shadow">
+                        <h3 class="text-xl font-bold">${item.titulo}</h3>
+                        <p class="text-gray-600">${item.conteudo}</p>
+                    </div>
+                </li>
+            `;
+            }
+
+        } catch (erro) {
+            console.log(erro);
+            lista.innerHTML = '<p>Erro ao carregar avisos</p>';
+        }
+    }
+
+        
+        verificarLogin();
+        buscarDados();
     </script>
 </body>
 </html>

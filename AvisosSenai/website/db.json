@@ -1,26 +1,38 @@
 [
   {
-    "titulo": "Renan o Feio",
-    "descricao": "Era uma vez, um menino muito feio chamado renan. Sua namorada eliza, hoje, o odeia até a morte"
+    "titulo": "Reunião de Pais",
+    "conteudo": "A reunião ocorrerá na próxima sexta-feira no auditório principal."
+  },
+  {
+    "titulo": "Manutenção no Laboratório 03",
+    "conteudo": "O laboratório estará fechado para troca de componentes."
   },
   {
     "titulo": "Entrega de Projetos",
-    "descricao": "A data limite para entrega do projeto Sentinela foi prorrogada para sexta-feira."
+    "conteudo": "Os alunos devem entregar o projeto final até quarta-feira."
   },
   {
-    "titulo": "Evento Senai",
-    "descricao": "Não percam a palestra sobre Rust e Sistemas Embarcados amanhã no auditório."
+    "titulo": "Palestra de Tecnologia",
+    "conteudo": "Haverá uma palestra sobre inteligência artificial no auditório."
   },
   {
-    "titulo": "Evento Senai",
-    "descricao": "Não percam a palestra sobre Rust e Sistemas Embarcados amanhã no auditório."
+    "titulo": "Curso de Robótica",
+    "conteudo": "Inscrições abertas para o curso extracurricular de robótica."
   },
   {
-    "titulo": "Evento Senai",
-    "descricao": "Não percam a palestra sobre Rust e Sistemas Embarcados amanhã no auditório."
+    "titulo": "Prova de Eletrônica",
+    "conteudo": "A prova será aplicada na próxima segunda-feira."
   },
   {
-    "titulo": "Evento Senai",
-    "descricao": "Não percam a palestra sobre Rust e Sistemas Embarcados amanhã no auditório."
+    "titulo": "Visita Técnica",
+    "conteudo": "Os alunos irão visitar uma indústria parceira do SENAI."
+  },
+  {
+    "titulo": "Hackathon SENAI",
+    "conteudo": "Evento de programação acontecerá durante o final de semana."
+  },
+  {
+    "titulo": "Atualização de Sistemas",
+    "conteudo": "Os computadores serão atualizados durante a noite."
   }
 ]
