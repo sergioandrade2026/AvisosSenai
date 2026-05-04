@@ -23,7 +23,8 @@ namespace AvisosSenai
             }
             else
             {
-                _errorManager.Status = ErrorStatus.None;
+                _errorManager.Status = ErrorStatus.ConectionError;
+
 
             }
 
